@@ -3,6 +3,8 @@ import { View, TouchableOpacity, Text, TextInput, Image, FlatList, StatusBar } f
 import { styles } from "./styles";
 import CirculoMagico from '../../assets/CirculoMagico.png';
 
+import { MaterialIcons } from '@expo/vector-icons';
+
 interface habilidadeProps {
     id: string,
     nome: string,
@@ -48,11 +50,15 @@ export const Habilidades = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>
-                Seja Bem Vindo! {listaHabilidades.length}
+                Seja Bem Vindo!
             </Text>
             <Text style={styles.title}>
                 {saudacoes}
             </Text>
+            <MaterialIcons
+                name="alarm-off"
+                color={"#fff"}
+            />
             <TextInput
                 style={styles.input}
                 placeholder="Nova Habilidade"
