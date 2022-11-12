@@ -36,5 +36,19 @@ export const styles = StyleSheet.create({
         tintColor: "#f00",
         width: 50, 
         height: 50
-    }
+    },
+    buttonSkill: {
+        backgroundColor: '#1f1e25',
+        padding: 15,
+        borderRadius: 50,
+        alignItems: 'center',
+        marginVertical: 5,
+        flexDirection: "row",
+    },
+    textSkill: {
+        marginLeft: 5,
+        color: '#FFF',
+        fontSize: 22,
+        fontWeight: 'bold',
+    },
 })
