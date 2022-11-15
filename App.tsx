@@ -1,12 +1,11 @@
 import React from "react";
-import { Equipamentos } from "./src/screens/Equipamentos";
-import { Habilidades } from "./src/screens/Habilidades";
+import { Routes } from "./src/routes";
 
 
 function App() {
 
   return (
-    <Habilidades/>
+    <Routes />
   )
 }
 

@@ -4,8 +4,10 @@ import { styles } from "./styles";
 import CirculoMagico from '../../assets/CirculoMagico.png';
 
 import { MaterialIcons } from '@expo/vector-icons';
+import { Botao } from "../../components/Botao";
+import { CardHabilidade } from "../../components/CardHabilidade";
 
-interface habilidadeProps {
+export interface habilidadeProps {
     id: string,
     nome: string,
 }
@@ -66,16 +68,7 @@ export const Habilidades = () => {
                 onChangeText={(value) => setHabilidade(value)}
             />
 
-            <TouchableOpacity
-                onPress={() => adiconaHabilidade()}
-                style={styles.button}
-            >
-                <Text
-                    style={styles.buttonText}
-                >
-                    Habilidades
-                </Text>
-            </TouchableOpacity>
+            <Botao title="Habilidades" onPress={adiconaHabilidade} />
 
             <FlatList
                 style={{marginTop: 10}}
@@ -83,18 +76,10 @@ export const Habilidades = () => {
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => {
                     return (
-                        <TouchableOpacity
+                        <CardHabilidade 
                             onPress={()=> removedorDeHabilidade(item.id)}
-                            style={styles.buttonSkill}
-                        >
-                            <Image
-                                source={CirculoMagico}
-                                style={styles.image}
-                            />
-                            <Text style={styles.textSkill}>
-                                {item.nome}
-                            </Text>
-                        </TouchableOpacity>
+                            habilidade={item}
+                        />
                     )
                 }}
             />
