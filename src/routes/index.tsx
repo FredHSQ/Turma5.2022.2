@@ -13,7 +13,7 @@ import CartIcon from '../assets/icons/shopping_cart_FILL0_wght400_GRAD0_opsz48.p
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
 export type RootTabParamList = {
-    Habilidades: { token: string };
+    Habilidades: undefined;
     Loja: undefined;
     Carrinho: undefined;
 }

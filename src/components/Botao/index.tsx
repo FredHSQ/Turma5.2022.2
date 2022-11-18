@@ -4,6 +4,7 @@ import { styles } from "./styles"
 
 interface BotaoProps extends TouchableOpacityProps {
     title: string,
+
 }
 
 export const Botao = ({ title, ...resto }: BotaoProps) => {
