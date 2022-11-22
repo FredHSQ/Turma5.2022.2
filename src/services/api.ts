@@ -7,7 +7,8 @@ const apiItensMagicos = axios.create({
 export interface listaEquipamentos {
     index: string,
     name: string,
-    url: string
+    url: string,
+    preco?: number
 }
 
 interface getEquipamentosRespostaProps {

@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Modal, Text, ModalProps, Image, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
 import { Botao } from '../../Botao';
 import { styles } from './styles';
 
 import CloseIcon from "../../../assets/icons/close_FILL0_wght400_GRAD0_opsz48.png"
 import { useSafeAreaFrame } from 'react-native-safe-area-context';
-import { equipamentoStatusProps, getEquipementoEspecifico } from '../../../services/api';
+import { equipamentoStatusProps, getEquipementoEspecifico, listaEquipamentos } from '../../../services/api';
+import { CarrinhoContexto } from '../../../Context/CarrinhoContexto';
 
 interface ModalStatusProps extends ModalProps {
     modal: boolean;
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
     index: string;
+    preco?: number
 }
 
-export const ModalStatus = ({ modal, setModal, index, ...rest }: ModalStatusProps) => {
+export const ModalStatus = ({ modal, setModal, index, preco, ...rest }: ModalStatusProps) => {
 
-
-    const [equipamentoStatus, setEquipamentoStatus] = useState<equipamentoStatusProps>()
+    const [equipamentoStatus, setEquipamentoStatus] = useState<equipamentoStatusProps>();
     const [carregando, setCarregando] = useState<boolean>(true);
 
     useEffect(() => {
@@ -27,9 +28,23 @@ export const ModalStatus = ({ modal, setModal, index, ...rest }: ModalStatusProp
         }).finally(() => {
             setCarregando(false);
         })
-    }, [])
+    }, []);
+
+    const salvaListaDeEquipamentos = useContext(CarrinhoContexto).salvaListaDeEquipamentos
+    const tiraEquipamentoDoCarrinho = useContext(CarrinhoContexto).removeEquipamentoDoCarrinho
 
     let precoRandomico = Math.floor(Math.random() * 10000)
+
+    function botaEquipamentoNoCarrinho() {
+        let equipamentoComPreco: listaEquipamentos = {
+            index: equipamentoStatus.index,
+            name: equipamentoStatus.name,
+            url: equipamentoStatus.url,
+            preco: precoRandomico
+        }
+        salvaListaDeEquipamentos(equipamentoComPreco)
+        setModal(false);
+    }
 
     return (
         <Modal
@@ -82,7 +97,7 @@ export const ModalStatus = ({ modal, setModal, index, ...rest }: ModalStatusProp
                                             Preco:
                                         </Text>
                                         <Text style={styles.text}>
-                                            R$ {precoRandomico},00
+                                            R$ {preco ? preco : precoRandomico},00
                                         </Text>
                                     </View>
                                 </View>
@@ -100,8 +115,8 @@ export const ModalStatus = ({ modal, setModal, index, ...rest }: ModalStatusProp
                                             Informações adicionais:
                                         </Text>
                                         <Text style={styles.text}>
-                                            {equipamentoStatus.desc.map((text,index)=>{
-                                                if (index>1) 
+                                            {equipamentoStatus.desc.map((text, index) => {
+                                                if (index > 1)
                                                     return text
                                             })}
 
@@ -109,10 +124,21 @@ export const ModalStatus = ({ modal, setModal, index, ...rest }: ModalStatusProp
                                     </View>
                                 }
                             </ScrollView>
-                            <Botao
-                                title='Comprar'
-                                activeOpacity={0.9}
-                            />
+                            {preco ?
+                                <Botao
+                                    title='Remover do Carrinho'
+                                    onPress={()=>tiraEquipamentoDoCarrinho(index)}
+                                    activeOpacity={0.9}
+
+                                />
+                                :
+                                <Botao
+                                    title='Comprar'
+                                    onPress={botaEquipamentoNoCarrinho}
+                                    activeOpacity={0.9}
+
+                                />
+                            }
                         </>
                     }
                 </View>
